@@ -1,0 +1,270 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" href="pokemoninfo.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!--adds custom font-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Pokemon Info</title>
+    <!--website title-->
+  </head>
+  <body>
+    <!--same bar but the title takes u home-->
+    <div class="homepagebar">
+      <div class="bar-left">
+        <h2 id="homebutton" onclick="window.location.replace('homepage.html');">BattleDex</h2>
+        <h3>Pokemon Info</h3>
+      </div>
+      <div class="bar-mid">
+        <!--search bar-->
+        <div class="searchbarbut">
+        <input type="text" id="searchbarid" placeholder="Search Pokemon..." />
+        <button id="searchbutton" onclick="pokeSearch()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="15"
+            height="15"
+            viewBox="0 0 20 20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="10" cy="10" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+        </button>
+        </div>
+      </div>
+      <div class="bar-right">
+        <button>Settings</button>
+      </div>
+    </div>
+    <hr />
+    <div id="pokeinfo"></div>
+    <script>
+      const pokename = new URLSearchParams(window.location.search).get(
+        "pokemon", //gets pokemon name from the top url
+      );
+
+      document //makes it so u can press enter to search not just button
+        .getElementById("searchbarid")
+        .addEventListener("keydown", function (e) {
+          if (e.key === "Enter") {
+            pokeSearch();
+          }
+        });
+
+      document.addEventListener("keydown", function (e) {
+        if (
+          e.key === "/" &&
+          document.activeElement !== document.getElementById("searchbarid")
+        ) {
+          e.preventDefault();
+          document.getElementById("searchbarid").focus();
+        }
+      });
+
+      async function loadPokemon() {
+        const response = await fetch(
+          "https://pokeapi.co/api/v2/pokemon/" + pokename,
+        );
+
+        const data = await response.json();
+
+        const info = document.getElementById("pokeinfo");
+
+        const statNames = [
+          "HP",
+          "Attack",
+          "Defense",
+          "Sp. Atk",
+          "Sp. Def",
+          "Speed",
+        ];
+        const allTypes = [
+          "normal",
+          "fire",
+          "water",
+          "electric",
+          "grass",
+          "ice",
+          "fighting",
+          "poison",
+          "ground",
+          "flying",
+          "psychic",
+          "bug",
+          "rock",
+          "ghost",
+          "dragon",
+          "dark",
+          "steel",
+          "fairy",
+        ];
+        const types = data.types.map((t) => t.type.name);
+
+        const typeMultipliers = {};
+        const effectiveMultipliers = {};
+        allTypes.forEach((t) => (typeMultipliers[t] = 1));
+
+        let abilities = data.abilities.map((a) => a.ability.name);
+        for (const type of types) {
+          const typeData = await (
+            await fetch("https://pokeapi.co/api/v2/type/" + type)
+          ).json();
+          //adds keys with multipliers for the typing that it takes in damage from
+          typeData.damage_relations.double_damage_from.forEach((t) => {
+            typeMultipliers[t.name] = (typeMultipliers[t.name] ?? 1) * 2;
+          });
+          typeData.damage_relations.half_damage_from.forEach((t) => {
+            typeMultipliers[t.name] = (typeMultipliers[t.name] ?? 1) * 0.5;
+          });
+          typeData.damage_relations.no_damage_from.forEach((t) => {
+            typeMultipliers[t.name] = 0;
+          });
+          //adds keys for the types that it does damage to
+          typeData.damage_relations.double_damage_to.forEach((t) => {
+            effectiveMultipliers[t.name] =
+              (effectiveMultipliers[t.name] ?? 1) * 2;
+          });
+        }
+        if (abilities.includes("levitate")) {
+          //adds ground immunity if pokemon have that ability
+          typeMultipliers["ground"] = 0;
+        }
+
+        if (abilities.includes("wonder-guard")) {
+          //adds immunities for shedinja
+          Object.keys(typeMultipliers).forEach((t) => {
+            if (typeMultipliers[t] <= 1) {
+              typeMultipliers[t] = 0;
+            }
+          });
+        }
+        const weaknessesList = Object.keys(typeMultipliers).filter(
+          (t) => typeMultipliers[t] > 1,
+        );
+        const resistancesList = Object.keys(typeMultipliers).filter(
+          (t) => typeMultipliers[t] < 1 && typeMultipliers[t] > 0,
+        );
+        const immunitiesList = Object.keys(typeMultipliers).filter(
+          (t) => typeMultipliers[t] === 0,
+        );
+
+        const strongAgainstList = Object.keys(effectiveMultipliers).filter(
+          (t) => effectiveMultipliers[t] > 1,
+        );
+
+        info.innerHTML = `
+        <div class="elements_sidebyside">
+          <h1>${data.name.replace(/-/g, " ")}</h1>
+          <h2>Pokemon #${data.id}</h2>
+        </div>
+        <div class="sprite-stats">
+          <div class="sprites">
+            <img src="${data.sprites.other["official-artwork"].front_default}"/>
+            <img src="${data.sprites.front_default}"/>
+          </div>
+            <div class="stats">
+              <div class="stat-row">
+                <span class="stat-name">HP</span>
+                <span class="stat-num">${data.stats[0].base_stat}</span>
+                <div class="stat-bar-container">
+                  <div class="stat-bar" style="width: ${(data.stats[0].base_stat / 255) * 100}%"></div>
+                </div> 
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Attack</span>
+                <span class="stat-num">${data.stats[1].base_stat}</span>
+                <div class="stat-bar-container">
+                  <div class="stat-bar" style="width: ${(data.stats[1].base_stat / 255) * 100}%"></div>
+                </div> 
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Defense</span>
+                <span class="stat-num">${data.stats[2].base_stat}</span>
+                <div class="stat-bar-container">
+                  <div class="stat-bar" style="width: ${(data.stats[2].base_stat / 255) * 100}%"></div>
+                </div> 
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Sp. Atk</span>
+                <span class="stat-num">${data.stats[3].base_stat}</span>
+                <div class="stat-bar-container">
+                  <div class="stat-bar" style="width: ${(data.stats[3].base_stat / 255) * 100}%"></div>
+                </div> 
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Sp. Def</span>
+                <span class="stat-num">${data.stats[4].base_stat}</span>
+                <div class="stat-bar-container">
+                  <div class="stat-bar" style="width: ${(data.stats[4].base_stat / 255) * 100}%"></div>
+                </div> 
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Speed</span>
+                <span class="stat-num">${data.stats[5].base_stat}</span>
+                <div class="stat-bar-container">
+                  <div class="stat-bar" style="width: ${(data.stats[5].base_stat / 255) * 100}%"></div>
+                </div> 
+              </div>
+              <div class="stat-row">
+                <span class="stat-name">Total</span>
+                <span class="stat-num">${data.stats[0].base_stat + data.stats[1].base_stat + data.stats[2].base_stat + data.stats[3].base_stat + data.stats[4].base_stat + data.stats[5].base_stat}</span>
+                </div> 
+              </div>
+            </div>
+        <h2>Abilities- ${data.abilities.map((a) => a.ability.name).join(", ")}</h2>
+        <div class="space-types">
+          <h2>Typing- ${types.join("/")}</h2>
+          ${strongAgainstList.length > 0 ? `<h3>Super Effective to: ${strongAgainstList.join(", ")}</h3>` : ""}
+        </div>
+        ${weaknessesList.length > 0 ? `<h2>Weaknesses- ${weaknessesList.join(", ")}</h2>` : ""}
+        ${resistancesList.length > 0 ? `<h2>Resistances- ${resistancesList.join(", ")}</h2>` : ""}
+        ${immunitiesList.length > 0 ? `<h2>Immunities- ${immunitiesList.map((t) => (t === "ground" && abilities.includes("levitate") ? "ground*" : t)).join(", ")}${abilities.includes("levitate") ? " *if levitate is active" : ""}</h2>` : ""}
+        `;
+      }
+      let isSearching = false;
+      async function pokeSearch() {
+        //search bar
+        if (isSearching){
+          return;
+        }
+        isSearching = true;
+        const searchinput = document
+          .getElementById("searchbarid")
+          .value.toLowerCase()
+          .trim()
+          .replace(/\s+/g, "-")
+        if (!searchinput) {
+          alert("Empty, please type a valid Pokemon first!");
+          isSearching = false;
+          return;
+        }
+        try {
+          const response = await fetch(
+            "https://pokeapi.co/api/v2/pokemon/" + searchinput,
+          );
+          if (response.ok) {
+            window.location.href = "pokemoninfo.html?pokemon=" + searchinput;
+          } else {
+            alert("That's not a Pokemon! Type an actual Pokemon");
+            isSearching = false;
+          }
+        } catch (error) {
+          alert("Check your connection and try again");
+          isSearching = false;
+        }
+        isSearching = false;
+      }
+
+      loadPokemon();
+    </script>
+  </body>
+</html>

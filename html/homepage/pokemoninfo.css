@@ -1,0 +1,123 @@
+.homepagebar {
+width: 100%;
+display: flex;
+align-items: center;
+padding: 0px 16px;
+box-sizing:border-box;
+}
+
+#homebutton {
+cursor: pointer;
+
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Rajdhani', serif;
+}
+
+.bar-left {
+flex: 1;
+display: flex;
+justify-content: flex-start;
+align-items: baseline;
+gap: 10px;
+}
+
+.bar-mid {
+flex: 1;
+display: flex;
+justify-content: center;
+align-items: baseline;
+}
+
+.bar-right {
+flex: 1;
+display: flex;
+justify-content: flex-end;
+align-items: baseline;
+}
+
+.elements_sidebyside { 
+display: flex; 
+justify-content: flex-start; 
+gap: 10px;
+align-items: baseline;
+}
+.space-types { 
+display: flex; 
+justify-content: flex-start; 
+gap: 50px;
+align-items: baseline;
+}
+#pokeinfo img {
+width: 133px;
+}
+
+#pokeinfo {
+text-transform: capitalize;
+padding: 0px 16px;
+box-sizing:border-box;
+}
+
+.sprite-stats{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.stats {
+  flex: 1;
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.stat-name {
+  width: 49px;
+  font-weight: bold;
+}
+
+.stat-num {
+  width: 30px;
+  text-align: right;
+  font-weight: bold;
+}
+
+.stat-bar-container {
+  width: 200px;
+  background-color: lightgray;
+  border-radius: 5px;
+  height: 10px;
+}
+
+.stat-bar {
+  height: 10px;
+  background-color: green;
+  border-radius: 5px;
+}
+
+#searchbarid{
+width: 300px;
+height: 29px;
+font-size: 20px;
+border-radius: 5px;
+font-family: 'Rajdhani', serif;
+font-weight: bold;
+}
+
+#searchbutton {
+padding: 6px 9px;
+font: 16px;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.searchbarbut {
+display:flex;
+align-items: center; 
+}

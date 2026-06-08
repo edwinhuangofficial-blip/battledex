@@ -1,0 +1,89 @@
+.homepagebar {
+width: 100%;
+display: flex;
+align-items: center;
+padding: 0px 16px;
+box-sizing:border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Rajdhani', serif;
+}
+
+.bar-left {
+flex: 1;
+display: flex;
+justify-content: flex-start;
+align-items: baseline;
+gap: 10px;
+}
+
+.bar-mid {
+flex: 1;
+display: flex;
+justify-content: center;
+align-items: baseline;
+}
+
+.bar-right {
+flex: 1;
+display: flex;
+justify-content: flex-end;
+align-items: baseline;
+}
+
+.elements_sidebyside { 
+display: flex; 
+justify-content: flex-start; 
+align-items: center;
+gap: 10px;
+align-items: baseline;
+}
+#searchbarid{
+width: 300px;
+height: 29px;
+font-size: 20px;
+border-radius: 5px;
+font-family: 'Rajdhani', serif;
+font-weight: bold;
+}
+
+#searchbutton {
+padding: 6px 9px;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.searchbarbut {
+display:flex;
+align-items: center; 
+}
+
+#poke-grid {
+display: grid;
+grid-template-columns: repeat(5, 1fr);
+gap: 16px;
+padding: 16px;
+box-sizing: border-box;
+width: 100%;
+}
+.pokecard {
+text-transform: capitalize;
+border: 1px solid #856eea;
+border-radius: 10px;
+text-align: center;
+padding: 10px;
+cursor: pointer;
+font-weight: bold;
+}
+
+.pokecard img {
+width: 100%;
+height: auto;
+}
+
+#homebutton {
+cursor: pointer;
+}
