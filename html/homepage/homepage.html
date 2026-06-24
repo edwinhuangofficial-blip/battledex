@@ -9,7 +9,7 @@
       href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-
+    <script src="fetchapi.js"></script>
     <title>BattleDex</title>
   </head>
   <body>
@@ -43,31 +43,11 @@
         ><!--make this work later-->
       </div>
     </div>
-    <hr />
     <div id="poke-grid"></div>
     <!--pokemon for the homepage-->
     <div id="load"></div>
     <!--loading trip to pre-load pokemon so its smooth infinite scrolling-->
     <script>
-      //search bar
-      document //makes it so u can press enter to search not just button
-        .getElementById("searchbarid")
-        .addEventListener("keydown", function (e) {
-          if (e.key === "Enter") {
-            pokeSearch(); //search function
-          }
-        });
-
-      document.addEventListener("keydown", function (e) {
-        if (
-          //so u can press / to open search bar like google
-          e.key === "/" &&
-          document.activeElement !== document.getElementById("searchbarid")
-        ) {
-          e.preventDefault();
-          document.getElementById("searchbarid").focus();
-        }
-      });
       let offset = 0;
       let isLoading = false;
       let reachedEnd = false;
@@ -112,38 +92,6 @@
         card.onclick = () => {
           window.location.href = "pokemoninfo.html?pokemon=" + data.name;
         };
-      }
-      let isSearching = false;
-      async function pokeSearch() {
-        if (isSearching) {
-          return;
-        }
-        isSearching = true;
-        const pokename = document
-          .getElementById("searchbarid")
-          .value.toLowerCase()
-          .trim()
-          .replace(/\s+/g, "-");
-        if (!pokename) {
-          alert("Empty, please type a valid Pokemon first!");
-          isSearching = false;
-          return;
-        }
-        try {
-          const response = await fetch(
-            "https://pokeapi.co/api/v2/pokemon/" + pokename,
-          );
-          if (response.ok) {
-            window.location.href = "pokemoninfo.html?pokemon=" + pokename;
-          } else {
-            alert("That's not a Pokemon! Type an actual Pokemon");
-            isSearching = false;
-          }
-        } catch (error) {
-          alert("Check your connection and try again");
-          isSearching = false;
-        }
-        isSearching = false;
       }
 
       const loadObserve = document.getElementById("load");
