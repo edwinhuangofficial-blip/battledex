@@ -19,9 +19,10 @@
           BattleDex
         </h2>
       </div>
+
       <div class="bar-mid">
         <div class="searchbarbut">
-          <input type="text" id="searchbarid" placeholder="Search Pokemon..." />
+          <input type="text" id="searchbarid" placeholder="Search Pokemon..." autocomplete="off" />
           <button id="searchbutton" onclick="pokeSearch()">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -36,8 +37,10 @@
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
           </button>
+          <div id="search-dropdown"></div>
         </div>
       </div>
+
       <div class="bar-right">
         <button onclick="">Settings</button
         ><!--make this work later-->

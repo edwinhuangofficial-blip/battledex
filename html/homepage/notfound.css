@@ -73,13 +73,9 @@ cursor: pointer;
 .searchbarbut {
 display:flex;
 align-items: center; 
+position: relative;
 }
-.notfound-num {
-  font-size: 67px;
-  font-weight: bold;
-  color: #856eea;
-  margin: 0;
-}
+
 #notfoundbody {
   display: flex;
   flex-direction: column;
@@ -97,4 +93,47 @@ font-weight: bold;
 
 .notfound-title {
   margin: 8px 0 16px;
+}
+
+#search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #856eea;
+  border-radius: 8px;
+  z-index: 200;
+  display: none;
+  max-height: 267px;
+  overflow-y: auto;
+  min-height: 50px;
+}
+
+#search-dropdown.active {
+  display: block;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.dropdown-item:hover {
+  background: #f0edff;
+}
+
+.dropdown-item img {
+  width: 40px;
+  height: 40px;
+}
+
+.dropdown-item-name {
+  flex: 1;
+  font-weight: bold;
+  font-size: 15px;
 }
