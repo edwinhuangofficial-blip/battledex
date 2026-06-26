@@ -138,6 +138,10 @@
           (t) => effectiveMultipliers[t] > 1,
         );
 
+        const totalStats = data.stats[0].base_stat + data.stats[1].base_stat + data.stats[2].base_stat + data.stats[3].base_stat + data.stats[4].base_stat + data.stats[5].base_stat;
+        const weightKg = (data.weight / 10).toFixed(1);
+        const weightLbs = (data.weight / 10 * 2.205).toFixed(1);
+
         info.innerHTML = `
         <div class="elements_sidebyside">
           <h1>${data.name.replace(/-/g, " ")
@@ -199,17 +203,15 @@
               </div>
               <div class="stat-row">
                 <span class="stat-name">Total</span>
-                <span class="stat-num">${data.stats[0].base_stat + data.stats[1].base_stat + data.stats[2].base_stat + data.stats[3].base_stat + data.stats[4].base_stat + data.stats[5].base_stat}</span>
-                </div> 
+                <span class="stat-num" style="width:auto">&nbsp;&nbsp;${totalStats} &nbsp;&nbsp;&nbsp;&nbsp; Weight: ${weightKg}kg / ${weightLbs}lbs</span>
+              </div>
               </div>
             </div>
         <h2>Abilities- ${data.abilities.map((a) => a.ability.name.replace(/-/g, " ")).join(", ")}</h2>
-        <div class="space-types">
-          <h2>Typing &nbsp;${types.map(t => `<span class="type-badge type-${t}">${t}</span>`).join(" ")}</h2>
-          ${strongAgainstList.length > 0 ? `<h3>STAB Super Effective to &nbsp;${strongAgainstList.map(t => `<span class="type-badge type-${t}">${t}</span>`).join(" ")}</h3>` : ""}
-        </div>
-        ${weaknessesList.length > 0 ? `<h2>Weaknesses &nbsp;${weaknessesList.map(t => `<span class="type-badge type-${t}">${t}</span>`).join(" ")}</h2>` : ""}
-        ${resistancesList.length > 0 ? `<h2>Resistances &nbsp;${resistancesList.map(t => `<span class="type-badge type-${t}">${t}</span>`).join(" ")}</h2>` : ""}
+       <h2>Typing &nbsp;${types.map(t => `<span class="type-badge type-${t}">${t}</span>`).join(" ")}</h2>
+        ${strongAgainstList.length > 0 ? `<h2>STAB Super Effective to &nbsp;${strongAgainstList.map(t => `<span class="type-badge type-${t}">${t}</span>`).join(" ")}</h2>` : ""}
+        ${weaknessesList.length > 0 ? `<h2>Weaknesses &nbsp;${weaknessesList.map(t => `<span class="type-badge type-${t}">${t} ${typeMultipliers[t]}x</span>`).join(" ")}</h2>` : ""}
+        ${resistancesList.length > 0 ? `<h2>Resistances &nbsp;${resistancesList.map(t => `<span class="type-badge type-${t}">${t} ${typeMultipliers[t]}x</span>`).join(" ")}</h2>` : ""}
         ${immunitiesList.length > 0 ? `<h2>Immunities &nbsp;${immunitiesList.map((t) => (t === "ground" && abilities.includes("levitate") ? "ground" : t)).map(t => `<span class="type-badge type-${t}">${t}</span>`).join(" ")}${abilities.includes("levitate") ? " *if levitate is active" : ""}</h2>` : ""}
         `;
       }

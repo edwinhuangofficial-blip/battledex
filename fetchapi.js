@@ -55,13 +55,16 @@ async function updateDropdown(input) {
       item.innerHTML = `
       <img src="${pokemonCache[pokemon.api].spriteCache}"/>
       <span class="dropdown-item-name">${pokemon.displayName}</span>
+      ${pokemonCache[pokemon.api].typeCache.map(t => `<span class="type-dropdown ${t}"></span>`).join("")}
       `;
     }
     else {
       fetch("https://pokeapi.co/api/v2/pokemon/" + pokemon.api)
     .then(res => res.json())
     .then(data => {
-      pokemonCache[pokemon.api] = {spriteCache: data.sprites.front_default
+      pokemonCache[pokemon.api] = {
+        spriteCache: data.sprites.front_default,
+        typeCache: data.types.map(t => t.type.name)
       }
       item.innerHTML = `
       <img src="${pokemonCache[pokemon.api].spriteCache}"/>

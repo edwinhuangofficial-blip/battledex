@@ -18,6 +18,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Rajdhani', serif;
+  zoom: 1.4;
 }
 
 .bar-left {
@@ -46,12 +47,6 @@ align-items: baseline;
 display: flex; 
 justify-content: flex-start; 
 gap: 10px;
-align-items: baseline;
-}
-.space-types { 
-display: flex; 
-justify-content: flex-start; 
-gap: 50px;
 align-items: baseline;
 }
 
@@ -133,15 +128,25 @@ position: relative;
   padding: 4px 12px;
   border-radius: 67px;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 15px;
   color: white;
   text-transform: capitalize;
   box-shadow: 0 0 0 2px black, 0 0 0 4px white, 0 0 0 6px black;
   margin-right: 5px;
   text-align: center;
-  width: 67px;
+  width: 104px;
   box-sizing: border-box
 }
+
+.type-dropdown{
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  margin-right: 3px;
+  vertical-align: middle;
+}
+
 
 .type-normal   { background-color: #a8a878; }
 .type-fire     { background-color: #f08030; }
