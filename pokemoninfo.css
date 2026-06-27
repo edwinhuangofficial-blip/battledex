@@ -20,7 +20,11 @@ body {
   font-family: 'Rajdhani', serif;
   zoom: 1.4;
 }
-
+@media (max-width: 1200px) {
+  body {
+    zoom: .93;
+  }
+}
 .bar-left {
 flex: 1;
 display: flex;
@@ -129,6 +133,22 @@ position: relative;
   border-radius: 67px;
   font-weight: bold;
   font-size: 15px;
+  text-shadow: 1px 1px 1px black;
+  color: white;
+  text-transform: capitalize;
+  box-shadow: 0 0 0 2px black, 0 0 0 4px white, 0 0 0 6px black;
+  margin-right: 5px;
+  text-align: center;
+  width: 75px;
+  box-sizing: border-box
+}
+.type-badge-multipliers {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 67px;
+  font-weight: bold;
+  font-size: 15px;
+  text-shadow: 1px 1px 1px black;
   color: white;
   text-transform: capitalize;
   box-shadow: 0 0 0 2px black, 0 0 0 4px white, 0 0 0 6px black;
@@ -137,14 +157,20 @@ position: relative;
   width: 104px;
   box-sizing: border-box
 }
-
 .type-dropdown{
   display: inline-block;
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
-  margin-right: 3px;
-  vertical-align: middle;
+  padding: 4px 12px;
+  border-radius: 67px;
+  font-weight: bold;
+  font-size: 14px;
+  text-shadow: 1px 1px 2px black;
+  color: white;
+  text-transform: capitalize;
+  box-shadow: 0 0 0 2px black, 0 0 0 4px white, 0 0 0 6px black;
+  margin-right: 5px;
+  text-align: center;
+  width: 67px;
+  box-sizing: border-box
 }
 
 

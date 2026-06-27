@@ -46,7 +46,7 @@ async function updateDropdown(input) {
   for (const pokemon of nameMatches){
     const item = document.createElement("div");
     item.className = "dropdown-item";
-    item.innerHTML = `<span class="dropdown-item-name">${pokemon.displayName}</span>`;
+    //item.innerHTML = `<span class="dropdown-item-name">${pokemon.displayName}</span>`;
     item.onclick = function() {
       window.location.href = "pokemoninfo.html?pokemon=" + pokemon.api;
     }
@@ -55,7 +55,7 @@ async function updateDropdown(input) {
       item.innerHTML = `
       <img src="${pokemonCache[pokemon.api].spriteCache}"/>
       <span class="dropdown-item-name">${pokemon.displayName}</span>
-      ${pokemonCache[pokemon.api].typeCache.map(t => `<span class="type-dropdown ${t}"></span>`).join("")}
+      ${pokemonCache[pokemon.api].typeCache.map(t => `<span class="type-dropdown type-${t}">${t}</span>`).join("")}
       `;
     }
     else {
@@ -69,6 +69,7 @@ async function updateDropdown(input) {
       item.innerHTML = `
       <img src="${pokemonCache[pokemon.api].spriteCache}"/>
       <span class="dropdown-item-name">${pokemon.displayName}</span>
+      ${pokemonCache[pokemon.api].typeCache.map(t => `<span class="type-dropdown type-${t}">${t}</span>`).join("")}
       `});
   }
 }
@@ -146,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("searchbarid").addEventListener("blur", function() {
     setTimeout(() => {
       document.getElementById("search-dropdown").classList.remove("active");
-    }, 99);
+    }, 150);
   });
 
 });

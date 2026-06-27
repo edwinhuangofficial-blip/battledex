@@ -85,12 +85,14 @@
 
       async function fetchCardData(card, url) {
         const data = await (await fetch(url)).json();
-        const types = data.types.map((t) => t.type.name).join("/");
+        const types = data.types.map((t) => t.type.name)
 
         card.innerHTML = `
           <img src="${data.sprites.other["official-artwork"].front_default}"/>
           <p>#${data.id} ${data.name.replace(/-/g, " ")}</p>
-          <p>${types}</p>
+          <div style="display:flex; gap:4px; justify-content:center;">
+            ${types.map(t => `<span class="type-badge type-${t}">${t}</span>`).join(" ")}
+          </div>
         `;
         card.onclick = () => {
           window.location.href = "pokemoninfo.html?pokemon=" + data.name;
