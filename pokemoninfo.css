@@ -137,7 +137,7 @@ position: relative;
   color: white;
   text-transform: capitalize;
   box-shadow: 0 0 0 2px black, 0 0 0 4px white, 0 0 0 6px black;
-  margin-right: 5px;
+  margin-right: 8px;
   text-align: center;
   width: 75px;
   box-sizing: border-box
@@ -152,9 +152,9 @@ position: relative;
   color: white;
   text-transform: capitalize;
   box-shadow: 0 0 0 2px black, 0 0 0 4px white, 0 0 0 6px black;
-  margin-right: 5px;
+  margin-right: 8px;
   text-align: center;
-  width: 104px;
+  width: 106px;
   box-sizing: border-box
 }
 .type-dropdown{
@@ -167,7 +167,7 @@ position: relative;
   color: white;
   text-transform: capitalize;
   box-shadow: 0 0 0 2px black, 0 0 0 4px white, 0 0 0 6px black;
-  margin-right: 5px;
+  margin-right: 6px;
   text-align: center;
   width: 67px;
   box-sizing: border-box

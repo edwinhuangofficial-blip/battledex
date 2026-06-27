@@ -90,7 +90,7 @@
         card.innerHTML = `
           <img src="${data.sprites.other["official-artwork"].front_default}"/>
           <p>#${data.id} ${data.name.replace(/-/g, " ")}</p>
-          <div style="display:flex; gap:4px; justify-content:center;">
+          <div style="display:flex; gap:13.5px; justify-content:center;">
             ${types.map(t => `<span class="type-badge type-${t}">${t}</span>`).join(" ")}
           </div>
         `;
